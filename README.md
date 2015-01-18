@@ -1,0 +1,2 @@
+# ufetch
+tiny system info
