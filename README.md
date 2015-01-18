@@ -1,2 +1,2 @@
 # ufetch
-tiny system info
+tiny system info for crux
