@@ -1,19 +1,18 @@
 #!/bin/bash
-
-## ufetch - tiny system info
+#
+# ufetch - tiny system info for crux
+#
 
 ## INFO
-# edit if customization is needed
 
 # user is already defined
 # hostname is already defined
-OS="CRUX 3.1"
+OS=$(crux)
 KERNEL=$(uname -rs)
+UPTIME=$(uptime -p | sed s:"up ":"":)
 PACKAGES=$(pkginfo -i | wc -l)
 # shell is already defined
 WM=$(tail -n 1 "$HOME/.xinitrc" | cut -d " " -f2)
-FONT="Profont 9"
-WEBSITE="driedonionsoup.com"
 
 ## DEFINE COLORS
 
@@ -33,12 +32,12 @@ bc=$(tput bold)		# bold
 
 cat <<EOF
 
-      ${c6}___${rc}     ${c6}${bc}${USER}${c7}@${c6}${HOSTNAME}${rc}
-     ${c6}(${c7}.·${rc} ${c6}|${rc}    ${c6}${bc}OS:${rc}       ${c7}${OS}${rc}
-     ${c6}(${c3}<>${rc} ${c6}|${rc}    ${c6}${bc}KERNEL:${rc}   ${c7}${KERNEL}${rc}
-    ${c6}/${rc} ${c7}__${c6}${rc}  ${c6}\\${rc}   ${c6}${bc}PACKAGES:${rc} ${c7}${PACKAGES}${rc}
-   ${c6}(${c7}${rc} ${c7}/${rc}  ${c7}\\${rc} ${c6}/|${rc}  ${c6}${bc}SHELL:${rc}    ${c7}${SHELL}${rc}
-  ${c3}_${c6}/\\${rc} ${c7}__)${c6}/${c3}_${c6})${rc}  ${c6}${bc}WM:${rc}       ${c7}${WM}${rc}
-  ${c3}\/${c6}-____${c3}\/${rc}   ${c6}${bc}WEBSITE:${rc}  ${c7}${WEBSITE}${rc}
+${c6}      ___     ${bc}${USER}${c7}@${c6}${HOSTNAME}${rc}
+${c6}     (${c7}.· ${c6}|    ${bc}OS:        ${c7}${OS}${rc}
+${c6}     (${c3}<> ${c6}|    ${bc}KERNEL:    ${c7}${KERNEL}${rc}
+${c6}    / ${c7}__  ${c6}\\   ${bc}UPTIME:    ${c7}${UPTIME}${rc}
+${c6}   ( ${c7}/  \ ${c6}/|  ${bc}PACKAGES:  ${c7}${PACKAGES}${rc}
+${c3}  _${c6}/\ ${c7}__)${c6}/${c3}_${c6})  ${bc}SHELL:     ${c7}${SHELL}${rc}
+${c3}  \/${c6}-____${c3}\/   ${c6}${bc}WM:        ${c7}${WM}${rc}
 
 EOF
