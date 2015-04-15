@@ -1,4 +1,4 @@
 # ufetch
-tiny system info for crux
+Tiny system info for CRUX.
 
-![](http://a.pomf.se/xbeths.png)
+![](http://a.pomf.se/wyaxfq.png)
