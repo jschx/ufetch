@@ -12,9 +12,11 @@ KERNEL=$(uname -sr)
 UPTIME=$(uptime -p | sed s:"up "::)
 PACKAGES=$(pkginfo -i | wc -l)
 # shell is already defined
-WM=$(tail -n 1 "$HOME/.xinitrc" | cut -d " " -f2)
+WM=$(tail -n 1 "${HOME}/.xinitrc" | cut -d " " -f2)
 
 ## DEFINE COLORS
+
+# probably don't change these
 
 bc=$(tput bold)		# bold
 c0=$(tput setaf 0)	# black
@@ -27,16 +29,23 @@ c6=$(tput setaf 6)	# cyan
 c7=$(tput setaf 7)	# white
 rc=$(tput sgr0)		# reset
 
+# you can change these
+
+lc=${bc}${c6}		# labels
+nc=${bc}${c6}		# user and hostname
+pc=${c6}		# penguin
+tc=${bc}${c7}		# text
+
 ## OUTPUT
 
 cat <<EOF
 
-${c6}      ___     ${bc}${USER}${c7}@${c6}${HOST}${rc}
-${c6}     (${c7}.· ${c6}|    ${bc}OS:       ${c7}${OS}${rc}
-${c6}     (${c3}<> ${c6}|    ${bc}KERNEL:   ${c7}${KERNEL}${rc}
-${c6}    / ${c7}__  ${c6}\\   ${bc}UPTIME:   ${c7}${UPTIME}${rc}
-${c6}   ( ${c7}/  \ ${c6}/|  ${bc}PACKAGES: ${c7}${PACKAGES}${rc}
-${c3}  _${c6}/\ ${c7}__)${c6}/${c3}_${c6})  ${bc}SHELL:    ${c7}${SHELL}${rc}
-${c3}  \/${c6}-____${c3}\/   ${c6}${bc}WM:       ${c7}${WM}${rc}
+${pc}      ___     ${bc}${nc}${USER}${tc}@${nc}${HOST}${rc}
+${pc}     (${c7}.· ${pc}|    ${lc}OS:${rc}       ${tc}${OS}${rc}
+${pc}     (${c3}<> ${pc}|    ${lc}KERNEL:${rc}   ${tc}${KERNEL}${rc}
+${pc}    / ${c7}__  ${pc}\   ${lc}UPTIME:${rc}   ${tc}${UPTIME}${rc}
+${pc}   ( ${c7}/  \ ${pc}/|  ${lc}PACKAGES:${rc} ${tc}${PACKAGES}${rc}
+${c3}  _${pc}/\ ${c7}__)${pc}/${c3}_${pc})  ${lc}SHELL:${rc}    ${tc}${SHELL}${rc}
+${c3}  \/${pc}-____${c3}\/   ${lc}WM:${rc}       ${tc}${WM}${rc}
 
 EOF
