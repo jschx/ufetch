@@ -1,5 +1,6 @@
 # ufetch
-Tiny system info for CRUX and Arch Linux.
+Tiny system info for CRUX, Arch Linux, and Gentoo.
 
-![](http://a.pomf.se/wyaxfq.png)
-![](http://a.pomf.se/mjtmkr.png)
+![](http://a.pomf.se/plynqn.png)
+![](http://a.pomf.se/bdfdub.png)
+![](http://a.pomf.se/icdecv.png)
