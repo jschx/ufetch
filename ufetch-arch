@@ -12,7 +12,7 @@ KERNEL="$(uname -sr)"
 UPTIME="$(uptime -p | sed s:"up "::)"
 PACKAGES="$(pacman -Q | wc -l)"
 # shell is already defined
-if [[ -z "$WM" ]]; then
+if [ -z "$WM" ]; then
 	WM="$(grep -v "^#" "${HOME}/.xinitrc" | tail -n 1 | cut -d " " -f2)"
 fi
 
