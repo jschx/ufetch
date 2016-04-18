@@ -8,7 +8,8 @@
 # user is already defined
 HOST="$(hostname)"
 OS='Gentoo Linux'
-KERNEL="$(uname -sr)" UPTIME="$(uptime -p | sed s:'up ':'':)"
+KERNEL="$(uname -sr)"
+UPTIME="$(uptime -p | sed s:'up ':'':)"
 PACKAGES="$(ls -d /var/db/pkg/*/* | wc -l)"
 # shell is already defined
 if [ -z "$WM" ]; then
