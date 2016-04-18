@@ -8,44 +8,46 @@
 # user is already defined
 HOST="$(hostname)"
 OS='Gentoo Linux'
-KERNEL="$(uname -sr)"
-UPTIME="$(uptime -p | sed s:'up ':'':)"
+KERNEL="$(uname -sr)" UPTIME="$(uptime -p | sed s:'up ':'':)"
 PACKAGES="$(ls -d /var/db/pkg/*/* | wc -l)"
 # shell is already defined
-if [[ -z "$WM" ]]; then
+if [ -z "$WM" ]; then
 	WM=$(tail -n 1 "$HOME/.xinitrc" | cut -d ' ' -f3)
 fi
+CPU="$(uname -p)"
 
 ## DEFINE COLORS
 
-rc=$(tput sgr0)   # reset
-c0=$(tput setaf 0)  # black
-c1=$(tput setaf 1)  # red
-c2=$(tput setaf 2)  # green
-c3=$(tput setaf 3)  # yellow
-c4=$(tput setaf 4)  # blue
-c5=$(tput setaf 5)  # magenta
-c6=$(tput setaf 6)  # cyan
-c7=$(tput setaf 7)  # white
-bc=$(tput bold)   # bold
+rc=$(tput sgr0)		# reset
+c0=$(tput setaf 0)	# black
+c1=$(tput setaf 1)	# red
+c2=$(tput setaf 2)	# green
+c3=$(tput setaf 3)	# yellow
+c4=$(tput setaf 4)	# blue
+c5=$(tput setaf 5)	# magenta
+c6=$(tput setaf 6)	# cyan
+c7=$(tput setaf 7)	# white
+bc=$(tput bold)		# bold
 
 # you can change these
-lc=${bc}${c5}			# labels
-nc=${bc}${c5}			# user and hostname
-tc=${bc}${c7}			# text
-fc=${bc}${c5}			# first color
-sc=${c5}					# second color
+lc=${c5}		# labels
+nc=${c5}		# user and hostname
+tc=${rc}		# text
+pc=${bc}${c5}		# primary color
+sc=${c5}		# secondary color
 
 ## OUTPUT
+# art from gentoo prefix project's bootstrap-prefix.sh
 
 cat <<EOF
 
-${fc}   _-----_${rc}     ${nc}${USER}${rc}${tc}@${rc}${nc}${HOSTNAME}${rc}
-${fc}  (       \\${rc}    ${lc}OS:${rc}        ${tc}${OS}${rc}
-${fc}  \    0   \\${rc}   ${lc}KERNEL:${rc}    ${tc}${KERNEL}${rc}
-${sc}   \        )${rc}  ${lc}UPTIME:${rc}    ${tc}${UPTIME}${rc}
-${sc}   /      _/${rc}   ${lc}PACKAGES:${rc}  ${tc}${PACKAGES}${rc}
-${sc}  (     _-${rc}     ${lc}SHELL:${rc}     ${tc}${SHELL}${rc}
-${sc}  \____-${rc}       ${lc}WM:${rc}        ${tc}${WM}${rc}
+${pc}     .vir.${rc}       ${nc}${USER}${rc}${tc}@${rc}${nc}${HOST}${rc}
+${pc}   .d\$\$\$\$${rc}${sc}\$\$b.${rc}    ${lc}OS:${rc}        ${tc}${OS}${rc}
+${pc}   \$\$\$\$${rc}${sc}( )${rc}${pc}\$${rc}${sc}\$\$b${rc}   ${lc}KERNEL:${rc}    ${tc}${KERNEL}${rc}
+${pc}   Q\$\$\$\$\$\$\$\$${rc}${sc}\$\$B${rc}  ${lc}UPTIME:${rc}    ${tc}${UPTIME}${rc}
+${pc}     "\$\$\$\$\$${rc}${sc}\$\$P${rc}   ${lc}PACKAGES:${rc}  ${tc}${PACKAGES}${rc}
+${pc}    d\$\$\$\$${rc}${sc}\$\$P"${rc}    ${lc}SHELL:${rc}     ${tc}${SHELL}${rc}
+${pc}  \$\$\$\$\$${rc}${sc}\$\$P${rc}       ${lc}WM:${rc}        ${tc}${WM}${rc}
+${pc}  \`Q\$\$${rc}${sc}P"${rc}         ${lc}CPU:       ${tc}${CPU}${rc}
 
 EOF
