@@ -1,0 +1,52 @@
+#!/bin/sh
+#
+# ufetch-void - tiny system info for void
+#
+
+## INFO
+
+# user is already defined
+HOST="$(hostname)"
+OS="Alpine Linux"
+KERNEL="$(uname -sr)"
+UPTIME="$(uptime -p | sed s:"up "::)"
+PACKAGES="$(apk info | wc -l)"
+# shell is already defined
+if [ -z "$WM" ]; then
+	WM="$(grep -v "^#" "${HOME}/.xinitrc" | tail -n 1 | cut -d " " -f2)"
+fi
+
+## DEFINE COLORS
+
+# probably don't change these
+bc="$(tput bold)"	# bold
+c0="$(tput setaf 0)"	# black
+c1="$(tput setaf 1)"	# red
+c2="$(tput setaf 2)"	# green
+c3="$(tput setaf 3)"	# yellow
+c4="$(tput setaf 4)"	# blue
+c5="$(tput setaf 5)"	# magenta
+c6="$(tput setaf 6)"	# cyan
+c7="$(tput setaf 7)"	# white
+rc="$(tput sgr0)"	# reset
+
+# you can change these
+lc="${bc}${c4}"		# labels
+nc="${bc}${c4}"		# user and hostname
+tc="${bc}${c7}"		# text
+fc="${bc}${c2}"		# first color
+sc="${c2}"		# second color
+
+## OUTPUT
+
+cat <<EOF
+
+${fc}${c4}     /\ /\       ${nc}${USER}${tc}@${nc}${HOST}${rc}
+${sc}${c4}    /${c7}/${c4} \  \      ${lc}OS:        ${tc}${OS}${rc}
+${sc}${c4}   /${c7}/${c4}   \  \     ${lc}KERNEL:    ${tc}${KERNEL}${rc}
+${sc}${c4}  /${c7}//${c4}    \  \    ${lc}UPTIME:    ${tc}${UPTIME}${rc}
+${sc}${c4}  ${c7}//${c4}      \  \   ${lc}PACKAGES:  ${tc}${PACKAGES}${rc}
+${sc}${c4}           \  \  ${lc}SHELL:     ${tc}${SHELL}${rc}
+${sc}${c4}            \    ${lc}WM:        ${tc}${WM}${rc}
+
+EOF
