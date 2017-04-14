@@ -1,2 +1,3 @@
 # ufetch
-Tiny system info for minimal *nix systems.
+
+Tiny system info for Linux distributions and \*BSDs.
