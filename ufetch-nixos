@@ -10,7 +10,7 @@ host="$(hostname)"
 os="$(nixos-version)"
 kernel="$(uname -sr)"
 uptime="$(uptime -p | sed 's/up //')"
-packages="$(ls -d -1 /nix/store/* | wc -l)"
+packages="$(ls -d -1 /nix/store/ | wc -l)"
 shell="$(basename ${SHELL})"
 if [ -z "${WM}" ]; then
 	WM="$(tail -n 1 "${HOME}/.xinitrc" | cut -d ' ' -f 2)"
