@@ -1,25 +1,25 @@
 #!/bin/sh
 #
-# ufetch-void - tiny system info for void
+# ufetch-alpine - tiny system info for alpine linux
 #
 
 ## INFO
 
 # user is already defined
-HOST="$(hostname)"
-OS="Alpine Linux"
-KERNEL="$(uname -sr)"
-UPTIME="$(uptime -p | sed s:"up "::)"
-PACKAGES="$(apk info | wc -l)"
-# shell is already defined
-if [ -z "$WM" ]; then
-	WM="$(grep -v "^#" "${HOME}/.xinitrc" | tail -n 1 | cut -d " " -f2)"
+hostname="$(hostname)"
+os='Alpine Linux'
+kernel="$(uname -sr)"
+uptime="$(uptime -p | sed 's/up //')"
+packages="$(apk info | wc -l)"
+shell="$(basename ${SHELL})"
+if [ -z "${WM}" ]; then
+	WM="$(tail -n 1 "${HOME}/.xinitrc" | cut -d ' ' -f 2)"
 fi
 
 ## DEFINE COLORS
 
 # probably don't change these
-bc="$(tput bold)"	# bold
+bc="$(tput bold)"		# bold
 c0="$(tput setaf 0)"	# black
 c1="$(tput setaf 1)"	# red
 c2="$(tput setaf 2)"	# green
@@ -28,25 +28,25 @@ c4="$(tput setaf 4)"	# blue
 c5="$(tput setaf 5)"	# magenta
 c6="$(tput setaf 6)"	# cyan
 c7="$(tput setaf 7)"	# white
-rc="$(tput sgr0)"	# reset
+rc="$(tput sgr0)"		# reset
 
 # you can change these
-lc="${bc}${c4}"		# labels
-nc="${bc}${c4}"		# user and hostname
-tc="${bc}${c7}"		# text
-fc="${bc}${c2}"		# first color
-sc="${c2}"		# second color
+lc="${rc}${bc}${c4}"	# labels
+nc="${rc}${bc}${c4}"	# user and hostname
+ic="${rc}${bc}${c7}"	# info
+fc="${rc}${c4}"			# first color
+sc="${rc}${c7}"			# second color
 
 ## OUTPUT
 
 cat <<EOF
 
-${fc}${c4}     /\ /\       ${nc}${USER}${tc}@${nc}${HOST}${rc}
-${sc}${c4}    /${c7}/${c4} \  \      ${lc}OS:        ${tc}${OS}${rc}
-${sc}${c4}   /${c7}/${c4}   \  \     ${lc}KERNEL:    ${tc}${KERNEL}${rc}
-${sc}${c4}  /${c7}//${c4}    \  \    ${lc}UPTIME:    ${tc}${UPTIME}${rc}
-${sc}${c4}  ${c7}//${c4}      \  \   ${lc}PACKAGES:  ${tc}${PACKAGES}${rc}
-${sc}${c4}           \  \  ${lc}SHELL:     ${tc}${SHELL}${rc}
-${sc}${c4}            \    ${lc}WM:        ${tc}${WM}${rc}
+${fc}     /\ /\       ${nc}${USER}${ic}@${nc}${hostname}${rc}
+${fc}    /${sc}/${fc} \  \      ${lc}OS:        ${ic}${os}${rc}
+${fc}   /${sc}/${fc}   \  \     ${lc}KERNEL:    ${ic}${kernel}${rc}
+${fc}  /${sc}//${fc}    \  \    ${lc}UPTIME:    ${ic}${uptime}${rc}
+${fc}  ${sc}//${fc}      \  \   ${lc}PACKAGES:  ${ic}${packages}${rc}
+${fc}           \  \  ${lc}SHELL:     ${ic}${shell}${rc}
+${fc}            \    ${lc}WM:        ${ic}${WM}${rc}
 
 EOF

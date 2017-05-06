@@ -1,25 +1,25 @@
 #!/bin/sh
 #
-# ufetch-void - tiny system info for void
+# ufetch-void - tiny system info for void linux
 #
 
 ## INFO
 
 # user is already defined
-HOST="$(hostname)"
-OS="Void Linux"
-KERNEL="$(uname -sr)"
-UPTIME="$(uptime -p | sed s:"up "::)"
-PACKAGES="$(xbps-query -l | wc -l)"
-# shell is already defined
-if [ -z "$WM" ]; then
-	WM="$(grep -v "^#" "${HOME}/.xinitrc" | tail -n 1 | cut -d " " -f2)"
+hostname="$(hostname)"
+os='Void Linux'
+kernel="$(uname -sr)"
+uptime="$(uptime -p | sed 's/up //')"
+packages="$(xbps-query -l | wc -l)"
+shell="$(basename ${SHELL})"
+if [ -z "${WM}" ]; then
+	WM="$(tail -n 1 "${HOME}/.xinitrc" | cut -d ' ' -f 2)"
 fi
 
 ## DEFINE COLORS
 
 # probably don't change these
-bc="$(tput bold)"	# bold
+bc="$(tput bold)"		# bold
 c0="$(tput setaf 0)"	# black
 c1="$(tput setaf 1)"	# red
 c2="$(tput setaf 2)"	# green
@@ -28,25 +28,25 @@ c4="$(tput setaf 4)"	# blue
 c5="$(tput setaf 5)"	# magenta
 c6="$(tput setaf 6)"	# cyan
 c7="$(tput setaf 7)"	# white
-rc="$(tput sgr0)"	# reset
+rc="$(tput sgr0)"		# reset
 
 # you can change these
-lc="${bc}${c2}"		# labels
-nc="${bc}${c2}"		# user and hostname
-tc="${bc}${c7}"		# text
-fc="${bc}${c2}"		# first color
-sc="${c2}"		# second color
+lc="${rc}${bc}${c2}"	# labels
+nc="${rc}${bc}${c2}"	# user and hostname
+ic="${rc}${bc}${c7}"	# info
+fc="${rc}${bc}${c2}"	# first color
+sc="${rc}${c2}"			# second color
 
 ## OUTPUT
 
 cat <<EOF
 
-${fc}      _______    ${nc}${USER}${tc}@${nc}${HOST}${rc}
-${sc}   _ ${fc}\______ -   ${lc}OS:        ${tc}${OS}${rc}
-${sc}  | \  ${fc}___  \ |  ${lc}KERNEL:    ${tc}${KERNEL}${rc}
-${sc}  | | ${fc}/   \ | |  ${lc}UPTIME:    ${tc}${UPTIME}${rc}
-${sc}  | | ${fc}\___/ | |  ${lc}PACKAGES:  ${tc}${PACKAGES}${rc}
-${sc}  | \______ ${fc}\_|  ${lc}SHELL:     ${tc}${SHELL}${rc}
-${sc}   -_______\     ${lc}WM:        ${tc}${WM}${rc}
+${fc}      _______    ${nc}${USER}${ic}@${nc}${hostname}${rc}
+${sc}   _ ${fc}\______ \   ${lc}OS:        ${ic}${os}${rc}
+${sc}  | \  ${fc}___  \ |  ${lc}KERNEL:    ${ic}${kernel}${rc}
+${sc}  | | ${fc}/   \ | |  ${lc}UPTIME:    ${ic}${uptime}${rc}
+${sc}  | | ${fc}\___/ | |  ${lc}PACKAGES:  ${ic}${packages}${rc}
+${sc}  | \______ ${fc}\_|  ${lc}SHELL:     ${ic}${shell}${rc}
+${sc}   \_______\     ${lc}WM:        ${ic}${WM}${rc}
 
 EOF

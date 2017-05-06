@@ -1,25 +1,25 @@
 #!/bin/sh
 #
-# ufetch-arch - tiny system info for arch
+# ufetch-arch - tiny system info for arch linux
 #
 
 ## INFO
 
 # user is already defined
-HOST="$(hostname)"
-OS="Arch Linux"
-KERNEL="$(uname -sr)"
-UPTIME="$(uptime -p | sed s:"up "::)"
-PACKAGES="$(pacman -Q | wc -l)"
-# shell is already defined
-if [ -z "$WM" ]; then
-	WM="$(grep -v "^#" "${HOME}/.xinitrc" | tail -n 1 | cut -d " " -f2)"
+hostname="$(hostname)"
+os='Arch Linux'
+kernel="$(uname -sr)"
+uptime="$(uptime -p | sed 's/up //')"
+packages="$(pacman -Q | wc -l)"
+shell="$(basename ${SHELL})"
+if [ -z "${WM}" ]; then
+	WM="$(tail -n 1 "${HOME}/.xinitrc" | cut -d ' ' -f 2)"
 fi
 
 ## DEFINE COLORS
 
 # probably don't change these
-bc="$(tput bold)"	# bold
+bc="$(tput bold)"		# bold
 c0="$(tput setaf 0)"	# black
 c1="$(tput setaf 1)"	# red
 c2="$(tput setaf 2)"	# green
@@ -28,25 +28,25 @@ c4="$(tput setaf 4)"	# blue
 c5="$(tput setaf 5)"	# magenta
 c6="$(tput setaf 6)"	# cyan
 c7="$(tput setaf 7)"	# white
-rc="$(tput sgr0)"	# reset
+rc="$(tput sgr0)"		# reset
 
 # you can change these
-lc="${bc}${c6}"		# labels
-nc="${bc}${c6}"		# user and hostname
-tc="${bc}${c7}"		# text
-fc="${bc}${c6}"		# first color
-sc="${c6}"		# second color
+lc="${rc}${bc}${c6}"	# labels
+nc="${rc}${bc}${c6}"	# user and hostname
+ic="${rc}${bc}${c7}"	# info
+fc="${rc}${bc}${c6}"	# first color
+sc="${rc}${c6}"			# second color
 
 ## OUTPUT
 
 cat <<EOF
 
-${fc}        /\\${rc}        ${nc}${USER}${rc}${tc}@${rc}${nc}${HOST}${rc}
-${fc}       /^^\\${rc}       ${lc}OS:${rc}       ${tc}${OS}${rc}
-${fc}      /\   \\${rc}      ${lc}KERNEL:${rc}   ${tc}${KERNEL}${rc}
-${fc}     /${rc}  ${sc}__  \\${rc}     ${lc}UPTIME:${rc}   ${tc}${UPTIME}${rc}
-${sc}    /  (  )  \\${rc}    ${lc}PACKAGES:${rc} ${tc}${PACKAGES}${rc}
-${sc}   / __|  |__\\\\${rc}   ${lc}SHELL:${rc}    ${tc}${SHELL}${rc}
-${sc}  ///        \\\\\\${rc}  ${lc}WM:${rc}       ${tc}${WM}${rc}
+${fc}        /\        ${nc}${USER}${ic}@${nc}${hostname}${rc}
+${fc}       /^^\       ${lc}OS:        ${ic}${os}${rc}
+${fc}      /\   \      ${lc}KERNEL:    ${ic}${kernel}${rc}
+${fc}     /  ${sc}__  \     ${lc}UPTIME:    ${ic}${uptime}${rc}
+${sc}    /  (  )  \    ${lc}PACKAGES:  ${ic}${packages}${rc}
+${sc}   / __|  |__\\\\   ${lc}SHELL:     ${ic}${shell}${rc}
+${sc}  ///        \\\\\  ${lc}WM:        ${ic}${WM}${rc}
 
 EOF

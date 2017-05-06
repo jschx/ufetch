@@ -6,48 +6,49 @@
 ## INFO
 
 # user is already defined
-HOST="$(hostname)"
-OS="$(uname -sr)"
-KERNEL="$(uname -v)"
-UPTIME="$(uptime | awk -F, '{sub(".*up ",x,$1);print $1}' | sed -e 's/^[ \t]*//')"
-PACKAGES="$(pkg_info -A | wc -l | sed -e 's/^[ \t]*//')"
-# shell is already defined
-if [ -z "$WM" ]; then
-	WM=$(tail -n 1 "$HOME/.xinitrc" | cut -d ' ' -f 2)
+host="$(hostname)"
+os="$(uname -sr)"
+kernel="$(uname -v)"
+uptime="$(uptime | awk -F, '{sub(".*up ",x,$1);print $1}' | sed -e 's/^[ \t]*//')"
+packages="$(pkg_info -A | wc -l | sed -e 's/^[ \t]*//')"
+shell="$(basename ${SHELL})"
+if [ -z "${WM}" ]; then
+	WM="$(tail -n 1 "${HOME}/.xinitrc" | cut -d ' ' -f 2)"
 fi
 
 ## DEFINE COLORS
 
-rc=$(tput sgr0)		# reset
-c0=$(tput setaf 0)	# black
-c1=$(tput setaf 1)	# red
-c2=$(tput setaf 2)	# green
-c3=$(tput setaf 3)	# yellow
-c4=$(tput setaf 4)	# blue
-c5=$(tput setaf 5)	# magenta
-c6=$(tput setaf 6)	# cyan
-c7=$(tput setaf 7)	# white
-bc=$(tput bold)		# bold
+# probably don't change these
+bc="$(tput bold)"		# bold
+c0="$(tput setaf 0)"	# black
+c1="$(tput setaf 1)"	# red
+c2="$(tput setaf 2)"	# green
+c3="$(tput setaf 3)"	# yellow
+c4="$(tput setaf 4)"	# blue
+c5="$(tput setaf 5)"	# magenta
+c6="$(tput setaf 6)"	# cyan
+c7="$(tput setaf 7)"	# white
+rc="$(tput sgr0)"		# reset
 
 # you can change these
-lc=${rc}${bc}${c3}	# labels
-nc=${rc}${bc}${c3}	# user and hostname
-ic=${rc}		# info
-fc=${rc}${c3}		# first color
-sc=${rc}${c7}		# second color
-tc=${rc}${bc}${c3}	# third color
+lc="${rc}${bc}${c3}"	# labels
+nc="${rc}${bc}${c3}"	# user and hostname
+ic="${rc}${bc}${c7}"	# info
+fc="${rc}${c3}"			# first color
+sc="${rc}${c7}"			# second color
+tc="${rc}${bc}${c3}"	# third color
 
 
 ## OUTPUT
 
 cat <<EOF
 
-${fc}      _____       ${nc}${USER}${ic}@${nc}${HOST}${rc}
-${fc}    \-     -/     ${lc}OS:        ${ic}${OS}${rc}
-${fc} \_/         \    ${lc}KERNEL:    ${ic}${KERNEL}${rc}
-${fc} |        ${sc}O O${fc} |   ${lc}UPTIME:    ${ic}${UPTIME}${rc}
-${fc} |_  ${tc}<   ${fc})  ${tc}3 ${fc})   ${lc}PACKAGES:  ${ic}${PACKAGES}${rc}
-${fc} / \         /    ${lc}SHELL:     ${ic}${SHELL}${rc}
-${fc}    /-_____-\     ${lc}WM:        ${ic}${WM}${rc}
+${fc}       _____      ${nc}${USER}${ic}@${nc}${host}${rc}
+${fc}     \-     -/    ${lc}OS:        ${ic}${os}${rc}
+${fc}  \_/         \   ${lc}KERNEL:    ${ic}${kernel}${rc}
+${fc}  |        ${sc}O O${fc} |  ${lc}UPTIME:    ${ic}${uptime}${rc}
+${fc}  |_  ${tc}<   ${fc})  ${tc}3 ${fc})  ${lc}PACKAGES:  ${ic}${packages}${rc}
+${fc}  / \         /   ${lc}SHELL:     ${ic}${shell}${rc}
+${fc}     /-_____-\    ${lc}WM:        ${ic}${WM}${rc}
 
 EOF

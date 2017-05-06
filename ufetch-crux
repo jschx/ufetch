@@ -6,20 +6,20 @@
 ## INFO
 
 # user is already defined
-HOST="$(hostname)"
-OS="$(crux)"
-KERNEL="$(uname -sr)"
-UPTIME="$(uptime -p | sed s:"up "::)"
-PACKAGES="$(pkginfo -i | wc -l)"
-# shell is already defined
-if [ -z "$WM" ]; then
-    WM="$(grep -v "^#" "${HOME}/.xinitrc" | tail -n 1 | cut -d " " -f2)"
+hostname="$(hostname)"
+os="$(crux)"
+kernel="$(uname -sr)"
+uptime="$(uptime -p | sed 's/up //')"
+packages="$(pkginfo -i | wc -l)"
+shell="$(basename ${SHELL})"
+if [ -z "${WM}" ]; then
+	WM="$(tail -n 1 "${HOME}/.xinitrc" | cut -d ' ' -f 2)"
 fi
 
 ## DEFINE COLORS
 
 # probably don't change these
-bc="$(tput bold)"	# bold
+bc="$(tput bold)"		# bold
 c0="$(tput setaf 0)"	# black
 c1="$(tput setaf 1)"	# red
 c2="$(tput setaf 2)"	# green
@@ -28,24 +28,24 @@ c4="$(tput setaf 4)"	# blue
 c5="$(tput setaf 5)"	# magenta
 c6="$(tput setaf 6)"	# cyan
 c7="$(tput setaf 7)"	# white
-rc="$(tput sgr0)"	# reset
+rc="$(tput sgr0)"		# reset
 
 # you can change these
-lc="${bc}${c6}"		# labels
-nc="${bc}${c6}"		# user and hostname
-tc="${bc}${c7}"		# text
-pc="${c6}"		# penguin
+lc="${rc}${bc}${c6}"	# labels
+nc="${rc}${bc}${c6}"	# user and hostname
+ic="${rc}${bc}${c7}"	# info
+pc="${rc}${c6}"			# penguin
 
 ## OUTPUT
 
 cat <<EOF
 
-${pc}      ___${rc}     ${nc}${USER}${rc}${tc}@${rc}${nc}${HOST}${rc}
-${pc}     (${rc}${c7}.·${rc} ${pc}|${rc}    ${lc}OS:${rc}       ${tc}${OS}${rc}
-${pc}     (${rc}${c3}<>${rc} ${pc}|${rc}    ${lc}KERNEL:${rc}   ${tc}${KERNEL}${rc}
-${pc}    /${rc} ${c7}__${rc}  ${pc}\\${rc}   ${lc}UPTIME:${rc}   ${tc}${UPTIME}${rc}
-${pc}   (${rc} ${c7}/  \\${rc} ${pc}/|${rc}  ${lc}PACKAGES:${rc} ${tc}${PACKAGES}${rc}
-${c3}  _${pc}/\\${rc} ${c7}__)${rc}${pc}/${rc}${c3}_${rc}${pc})${rc}  ${lc}SHELL:${rc}    ${tc}${SHELL}${rc}
-${c3}  \/${pc}-____${rc}${c3}\/${rc}   ${lc}WM:${rc}       ${tc}${WM}${rc}
+${pc}      ___     ${nc}${USER}${ic}@${nc}${hostname}${rc}
+${pc}     (${c7}.· ${pc}|    ${lc}OS:        ${ic}${os}${rc}
+${pc}     (${c3}<> ${pc}|    ${lc}KERNEL:    ${ic}${kernel}${rc}
+${pc}    / ${c7}__  ${pc}\\   ${lc}UPTIME:    ${ic}${uptime}${rc}
+${pc}   ( ${c7}/  \\ ${pc}/|  ${lc}PACKAGES:  ${ic}${packages}${rc}
+${c3}  _${pc}/\\ ${c7}__)${pc}/${c3}_${pc})  ${lc}SHELL:     ${ic}${shell}${rc}
+${c3}  \/${pc}-____${c3}\/   ${lc}WM:        ${ic}${WM}${rc}
 
 EOF
