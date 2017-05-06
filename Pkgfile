@@ -1,6 +1,6 @@
 # Description: Tiny system info for CRUX.
 # URL:         https://github.com/jschx/ufetch
-# Packager:    Joe Schillinger, js1 at openmailbox dot org
+# Packager:    Joe Schillinger, me at schil dot li
 # Maintainer:  6c37 Team, https://github.com/6c37/crux-ports/issues
 # Depends on:  
 
@@ -10,14 +10,15 @@ release=1
 source=()
 
 build() {
-	cd $PKGMK_SOURCE_DIR
+	cd "${PKGMK_SOURCE_DIR}"
 
-	if cd $name; then
-		git fetch -q; git reset --hard origin/master
+	if cd "${name}"; then
+		git fetch -q
+		git reset --hard origin/master
 	else
-		git clone https://github.com/jschx/ufetch $name
-		cd $name
+		git clone https://github.com/jschx/ufetch "${name}"
+		cd "${name}"
 	fi
 
-	install -Dm755 ufetch $PKG/usr/bin/ufetch
+	install -Dm755 ufetch-crux "${PKG}/usr/bin/ufetch"
 }
