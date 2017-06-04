@@ -1,8 +1,8 @@
-# Description: Tiny system info for CRUX.
+# Description: Tiny system info for Linux distributions and *BSDs.
 # URL:         https://github.com/jschx/ufetch
 # Packager:    Joe Schillinger, me at schil dot li
 # Maintainer:  6c37 Team, https://github.com/6c37/crux-ports/issues
-# Depends on:  
+# Depends on:
 
 name=ufetch
 version=git

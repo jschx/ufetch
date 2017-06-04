@@ -1,0 +1,52 @@
+#!/bin/sh
+#
+# ufetch-macos - tiny system info for macos
+#
+
+## INFO
+
+# user is already defined
+host="${HOSTNAME%%.*}"
+os="$(system_profiler SPSoftwareDataType | grep 'System Version'| awk '{print $3, $4}')"
+kernel="$(uname -v | cut -d' ' -f1-2)"
+uptime="$(uptime | awk -F, '{sub(".*up ",x,$1);print $1}' | sed -e 's/^[ \t]*//')"
+packages="$(find /usr/local/Homebrew/ -type d -name "Formula" -exec ls -1 {} \; | wc -l | awk '{print $1}')"
+shell="$(basename ${SHELL})"
+WM="Quartz Compositor"
+
+## DEFINE COLORS
+
+# probably don't change these
+bc="$(tput bold)"		# bold
+c0="$(tput setaf 0)"	# black
+c1="$(tput setaf 1)"	# red
+c2="$(tput setaf 2)"	# green
+c3="$(tput setaf 3)"	# yellow
+c4="$(tput setaf 4)"	# blue
+c5="$(tput setaf 5)"	# magenta
+c6="$(tput setaf 6)"	# cyan
+c7="$(tput setaf 7)"	# white
+rc="$(tput sgr0)"		# reset
+
+# you can change these
+lc="${rc}${bc}${c4}"	# labels
+nc="${rc}${bc}${c6}"	# user and hostname
+ic="${rc}${bc}${c7}"	# info
+fc="${rc}${c6}"			# first color
+sc="${rc}${c7}"			# second color
+tc="${rc}${bc}${c3}"	# third color
+
+
+## OUTPUT
+
+cat <<EOF
+
+${fc}${c2}         .:'   	  ${nc}${USER}${ic}@${nc}${host}${rc}
+${fc}${c2}     __ :'__   	  ${lc}OS:        ${ic}${os}${rc}
+${fc}${c3}  .'\`__\`-'__\`\`.	  ${lc}KERNEL:    ${ic}${kernel}${rc}
+${fc}${bc}${c1} :__________.-'	  ${lc}UPTIME:    ${ic}${uptime}${rc}
+${fc}${c1} :_________:   	  ${lc}PACKAGES:  ${ic}${packages}${rc}
+${fc}${c5}  :_________\`-;	  ${lc}SHELL:     ${ic}${shell}${rc}
+${fc}${bc}${c6}   \`.__.-.__.' 	  ${lc}WM:        ${ic}${WM}${rc}
+
+EOF
