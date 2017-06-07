@@ -7,10 +7,11 @@
 
 # user is already defined
 host="${HOSTNAME%%.*}"
-os="$(system_profiler SPSoftwareDataType | grep 'System Version'| awk '{print $3, $4}')"
-kernel="$(uname -v | cut -d' ' -f1-2)"
+software="$(system_profiler SPSoftwareDataType)"
+os=$(echo "$software" | grep 'System Version' -m 1)
+kernel="$(echo "$software" | grep 'Kernel' -m 1)"
 uptime="$(uptime | awk -F, '{sub(".*up ",x,$1);print $1}' | sed -e 's/^[ \t]*//')"
-packages="$(find /usr/local/Homebrew/ -type d -name "Formula" -exec ls -1 {} \; | wc -l | awk '{print $1}')"
+packages=( `brew list` `brew cask list` )
 shell="$(basename ${SHELL})"
 WM="Quartz Compositor"
 
@@ -42,10 +43,10 @@ tc="${rc}${bc}${c3}"	# third color
 cat <<EOF
 
 ${fc}${c2}         .:'   	  ${nc}${USER}${ic}@${nc}${host}${rc}
-${fc}${c2}     __ :'__   	  ${lc}OS:        ${ic}${os}${rc}
-${fc}${c3}  .'\`__\`-'__\`\`.	  ${lc}KERNEL:    ${ic}${kernel}${rc}
+${fc}${c2}     __ :'__   	  ${lc}OS:        ${ic}${os#*Version: }${rc}
+${fc}${c3}  .'\`__\`-'__\`\`.	  ${lc}KERNEL:    ${ic}${kernel#*Version: }${rc}
 ${fc}${bc}${c1} :__________.-'	  ${lc}UPTIME:    ${ic}${uptime}${rc}
-${fc}${c1} :_________:   	  ${lc}PACKAGES:  ${ic}${packages}${rc}
+${fc}${c1} :_________:   	  ${lc}PACKAGES:  ${ic}${#packages[@]}${rc}
 ${fc}${c5}  :_________\`-;	  ${lc}SHELL:     ${ic}${shell}${rc}
 ${fc}${bc}${c6}   \`.__.-.__.' 	  ${lc}WM:        ${ic}${WM}${rc}
 
