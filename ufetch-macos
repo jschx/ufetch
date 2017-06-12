@@ -6,14 +6,26 @@
 ## INFO
 
 # user is already defined
-host="${HOSTNAME%%.*}"
-software="$(system_profiler SPSoftwareDataType)"
-os=$(echo "$software" | grep 'System Version' -m 1)
-kernel="$(echo "$software" | grep 'Kernel' -m 1)"
+host="$(hostname)"
+os="$(sw_vers -productName) $(sw_vers -productVersion)"
+kernel="$(uname -sr)"
 uptime="$(uptime | awk -F, '{sub(".*up ",x,$1);print $1}' | sed -e 's/^[ \t]*//')"
-packages=( `brew list` `brew cask list` )
+if command -v pkgin &> /dev/null; then
+	packages="$(pkgin list | wc -l)"
+elif command -v brew &> /dev/null; then
+	brew_packages="$(brew list | wc -l)"
+	cask_packages="$(brew cask list 2> /dev/null | wc -l)"
+	packages="$(( ${brew_packages} + ${cask_packages} ))"
+elif command -v port &> /dev/null; then
+	packages="$(port installed | wc -l)"
+else
+	packages='no package manager'
+fi
+packages="$(echo ${packages} | sed -e 's/^[ /t]*//')"
 shell="$(basename ${SHELL})"
-WM="Quartz Compositor"
+if [ -z "${WM}" ]; then
+	WM='Quartz Compositor'
+fi
 
 ## DEFINE COLORS
 
@@ -31,23 +43,25 @@ rc="$(tput sgr0)"		# reset
 
 # you can change these
 lc="${rc}${bc}${c4}"	# labels
-nc="${rc}${bc}${c6}"	# user and hostname
+nc="${rc}${bc}${c4}"	# user and hostname
 ic="${rc}${bc}${c7}"	# info
-fc="${rc}${c6}"			# first color
-sc="${rc}${c7}"			# second color
-tc="${rc}${bc}${c3}"	# third color
+pc="${rc}${c2}"			# primary color
+sc="${rc}${c3}"			# secondary color
+tc="${rc}${c1}"		# tertiary color
+qc="${rc}${c5}"		# quaternary color
+uc="${rc}${c6}"		# quinary color
 
 
 ## OUTPUT
 
 cat <<EOF
 
-${fc}${c2}         .:'   	  ${nc}${USER}${ic}@${nc}${host}${rc}
-${fc}${c2}     __ :'__   	  ${lc}OS:        ${ic}${os#*Version: }${rc}
-${fc}${c3}  .'\`__\`-'__\`\`.	  ${lc}KERNEL:    ${ic}${kernel#*Version: }${rc}
-${fc}${bc}${c1} :__________.-'	  ${lc}UPTIME:    ${ic}${uptime}${rc}
-${fc}${c1} :_________:   	  ${lc}PACKAGES:  ${ic}${#packages[@]}${rc}
-${fc}${c5}  :_________\`-;	  ${lc}SHELL:     ${ic}${shell}${rc}
-${fc}${bc}${c6}   \`.__.-.__.' 	  ${lc}WM:        ${ic}${WM}${rc}
+${pc}        .:'    ${nc}${USER}${ic}@${nc}${host}${rc}
+${pc}     _ :'_     ${lc}OS:        ${ic}${os}${rc}
+${sc}  .'\`_\`-'_\`\`.  ${lc}KERNEL:    ${ic}${kernel}${rc}
+${tc} :________.-'  ${lc}UPTIME:    ${ic}${uptime}${rc}
+${tc} :_______:     ${lc}PACKAGES:  ${ic}${packages}${rc}
+${qc}  :_______\`-;  ${lc}SHELL:     ${ic}${shell}${rc}
+${uc}   \`._.-._.'   ${lc}WM:        ${ic}${WM}${rc}
 
 EOF
