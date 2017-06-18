@@ -1,0 +1,53 @@
+#!/bin/sh
+#
+# ufetch-freebsd - tiny system info for freebsd
+#
+
+## INFO
+
+# user is already defined
+host="$(hostname)"
+os="$(uname -sr)"
+kernel="$(uname -iK)"
+uptime="$(uptime | awk -F, '{sub(".*up ",x,$1);print $1}' | sed -e 's/^[ \t]*//')"
+packages="$(pkg info | wc -l | sed -e 's/^[ \t]*//')"
+shell="$(basename ${SHELL})"
+if [ -z "${WM}" ]; then
+	WM="$(tail -n 1 "${HOME}/.xinitrc" | cut -d ' ' -f 2)"
+fi
+
+## DEFINE COLORS
+
+# probably don't change these
+bc="$(tput md)"		# bold
+c0="$(tput AF 0)"	# black
+c1="$(tput AF 1)"	# red
+c2="$(tput AF 2)"	# green
+c3="$(tput AF 3)"	# yellow
+c4="$(tput AF 4)"	# blue
+c5="$(tput AF 5)"	# magenta
+c6="$(tput AF 6)"	# cyan
+c7="$(tput AF 7)"	# white
+rc="$(tput me)"		# reset
+
+# you can change these
+lc="${rc}${bc}${c1}"	# labels
+nc="${rc}${bc}${c1}"	# user and hostname
+ic="${rc}${bc}${c7}"	# info
+fc="${rc}${c1}"			# first color
+sc="${rc}${bc}${c1}"	# second color
+
+
+## OUTPUT
+
+cat <<EOF
+
+${fc}   ${sc}/\\ ${fc}_____ ${sc}/\   ${nc}${USER}${ic}@${nc}${host}${rc}
+${fc}   ${sc}\_)     (_/   ${lc}OS:        ${ic}${os}${rc}
+${fc}   /         \   ${lc}KERNEL:    ${ic}${kernel}${rc}
+${fc}  |           |  ${lc}UPTIME:    ${ic}${uptime}${rc}
+${fc}  |           |  ${lc}PACKAGES:  ${ic}${packages}${rc}
+${fc}   \         /   ${lc}SHELL:     ${ic}${shell}${rc}
+${fc}    --_____--    ${lc}WM:        ${ic}${WM}${rc}
+
+EOF
