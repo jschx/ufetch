@@ -1,0 +1,52 @@
+#!/bin/sh
+#
+# ufetch-manjaro - tiny system info for manjaro linux
+#
+
+## INFO
+
+# user is already defined
+hostname="$(hostname)"
+os='Manjaro Linux'
+kernel="$(uname -sr)"
+uptime="$(uptime -p | sed 's/up //')"
+packages="$(pacman -Q | wc -l)"
+shell="$(basename ${SHELL})"
+if [ -z "${WM}" ]; then
+	WM="$(tail -n 1 "${HOME}/.xinitrc" | cut -d ' ' -f 2)"
+fi
+
+## DEFINE COLORS
+
+# probably don't change these
+bc="$(tput bold)"		# bold
+c0="$(tput setaf 0)"	# black
+c1="$(tput setaf 1)"	# red
+c2="$(tput setaf 2)"	# green
+c3="$(tput setaf 3)"	# yellow
+c4="$(tput setaf 4)"	# blue
+c5="$(tput setaf 5)"	# magenta
+c6="$(tput setaf 6)"	# cyan
+c7="$(tput setaf 7)"	# white
+rc="$(tput sgr0)"		# reset
+
+# you can change these
+lc="${rc}${bc}${c6}"	# labels
+nc="${rc}${bc}${c6}"	# user and hostname
+ic="${rc}${bc}${c7}"	# info
+fc="${rc}${bc}${c6}"	# first color
+sc="${rc}${c6}"			# second color
+
+## OUTPUT
+
+cat <<EOF
+
+${fc}  █████████ ████  ${nc}${USER}${ic}@${nc}${hostname}${rc}
+${fc}  █████████ ████  ${lc}OS:        ${ic}${os}${rc}
+${fc}  ████      ████  ${lc}KERNEL:    ${ic}${kernel}${rc}
+${fc}  ████ ████ ████  ${lc}UPTIME:    ${ic}${uptime}${rc}
+${fc}  ████ ████ ████  ${lc}PACKAGES:  ${ic}${packages}${rc}
+${fc}  ████ ████ ████  ${lc}SHELL:     ${ic}${shell}${rc}
+${fc}  ████ ████ ████  ${lc}WM:        ${ic}${WM}${rc}
+
+EOF
