@@ -1,0 +1,52 @@
+#!/bin/sh
+#
+# ufetch-fedora - tiny system info for Fedora linux
+#
+
+## INFO
+
+# user is already defined
+hostname="$(hostname)"
+os="$(cat /etc/fedora-release)"
+kernel="$(uname -sr)"
+uptime="$(uptime -p | sed 's/up //')"
+packages="$(yum list installed | wc -l)"
+shell="$(basename ${SHELL})"
+if [ -z "${WM}" ]; then
+	WM="$(wmctrl -m | grep 'Name:' | sed 's/Name\: //')"
+fi
+
+## DEFINE COLORS
+
+# probably don't change these
+bc="$(tput bold)"		# bold
+c0="$(tput setaf 0)"	# black
+c1="$(tput setaf 1)"	# red
+c2="$(tput setaf 2)"	# green
+c3="$(tput setaf 3)"	# yellow
+c4="$(tput setaf 4)"	# blue
+c5="$(tput setaf 5)"	# magenta
+c6="$(tput setaf 6)"	# cyan
+c7="$(tput setaf 7)"	# white
+rc="$(tput sgr0)"		# reset
+
+# you can change these
+lc="${rc}${bc}${c4}"	# labels
+nc="${rc}${bc}${c4}"	# user and hostname
+ic="${rc}${bc}${c7}"	# info
+fc="${rc}${c4}"			# first color
+sc="${rc}${c7}"			# second color
+
+## OUTPUT
+
+cat <<EOF
+
+${fc}  :::${sc}/fFF${fc}:::   ${nc}${USER}${ic}@${nc}${hostname}${rc}
+${fc} ::::${sc}fFF${fc}:::::  ${lc}OS:        ${ic}${os}${rc}
+${fc} ::${sc}fffFFfff${fc}::  ${lc}KERNEL:    ${ic}${kernel}${rc}
+${fc} ::${sc}fffFFfff${fc}::  ${lc}UPTIME:    ${ic}${uptime}${rc}
+${fc} ::::${sc}fFF${fc}::::   ${lc}PACKAGES:  ${ic}${packages}${rc}
+${fc} ::::${sc}fFF${fc}:::    ${lc}SHELL:     ${ic}${shell}${rc}
+${fc} :::${sc}FFf/${fc}::     ${lc}WM:        ${ic}${WM}${rc}
+
+EOF
