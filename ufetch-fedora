@@ -1,12 +1,11 @@
 #!/bin/sh
 #
-# ufetch-fedora - tiny system info for Fedora linux
-#
+# ufetch-fedora - tiny system info for fedora
 
 ## INFO
 
 # user is already defined
-hostname="$(hostname)"
+host="$(hostname)"
 os="$(cat /etc/fedora-release)"
 kernel="$(uname -sr)"
 uptime="$(uptime -p | sed 's/up //')"
@@ -19,34 +18,33 @@ fi
 ## DEFINE COLORS
 
 # probably don't change these
-bc="$(tput bold)"		# bold
-c0="$(tput setaf 0)"	# black
-c1="$(tput setaf 1)"	# red
-c2="$(tput setaf 2)"	# green
-c3="$(tput setaf 3)"	# yellow
-c4="$(tput setaf 4)"	# blue
-c5="$(tput setaf 5)"	# magenta
-c6="$(tput setaf 6)"	# cyan
-c7="$(tput setaf 7)"	# white
-rc="$(tput sgr0)"		# reset
+bold="$(tput bold)"
+black="$(tput setaf 0)"
+red="$(tput setaf 1)"
+green="$(tput setaf 2)"
+yellow="$(tput setaf 3)"
+blue="$(tput setaf 4)"
+magenta="$(tput setaf 5)"
+cyan="$(tput setaf 6)"
+white="$(tput setaf 7)"
+reset="$(tput sgr0)"
 
 # you can change these
-lc="${rc}${bc}${c4}"	# labels
-nc="${rc}${bc}${c4}"	# user and hostname
-ic="${rc}${bc}${c7}"	# info
-fc="${rc}${c4}"			# first color
-sc="${rc}${c7}"			# second color
+lc="${reset}${bold}${blue}"		# labels
+nc="${reset}${bold}${blue}"		# user and hostname
+ic="${reset}${bold}${white}"	# info
+c0="${reset}${white}"			# first color
 
 ## OUTPUT
 
 cat <<EOF
-
-${fc}  :::${sc}/fFF${fc}:::   ${nc}${USER}${ic}@${nc}${hostname}${rc}
-${fc} ::::${sc}fFF${fc}:::::  ${lc}OS:        ${ic}${os}${rc}
-${fc} ::${sc}fffFFfff${fc}::  ${lc}KERNEL:    ${ic}${kernel}${rc}
-${fc} ::${sc}fffFFfff${fc}::  ${lc}UPTIME:    ${ic}${uptime}${rc}
-${fc} ::::${sc}fFF${fc}::::   ${lc}PACKAGES:  ${ic}${packages}${rc}
-${fc} ::::${sc}fFF${fc}:::    ${lc}SHELL:     ${ic}${shell}${rc}
-${fc} :::${sc}FFf/${fc}::     ${lc}WM:        ${ic}${WM}${rc}
+${c0}       _____
+${c0}      /   __/  ${nc}${USER}${ic}@${nc}${host}${reset}
+${c0}     |  /      ${lc}OS:        ${ic}${os}${reset}
+${c0}    _|  |_     ${lc}KERNEL:    ${ic}${kernel}${reset}
+${c0}   |_    _|    ${lc}UPTIME:    ${ic}${uptime}${reset}
+${c0}     |  |      ${lc}PACKAGES:  ${ic}${packages}${reset}
+${c0}   __/  |      ${lc}SHELL:     ${ic}${shell}${reset}
+${c0}  /____/       ${lc}WM:        ${ic}${WM}${reset}
 
 EOF

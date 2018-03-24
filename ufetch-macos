@@ -1,7 +1,6 @@
 #!/bin/sh
 #
 # ufetch-macos - tiny system info for macos
-#
 
 ## INFO
 
@@ -30,38 +29,37 @@ fi
 ## DEFINE COLORS
 
 # probably don't change these
-bc="$(tput bold)"		# bold
-c0="$(tput setaf 0)"	# black
-c1="$(tput setaf 1)"	# red
-c2="$(tput setaf 2)"	# green
-c3="$(tput setaf 3)"	# yellow
-c4="$(tput setaf 4)"	# blue
-c5="$(tput setaf 5)"	# magenta
-c6="$(tput setaf 6)"	# cyan
-c7="$(tput setaf 7)"	# white
-rc="$(tput sgr0)"		# reset
+bold="$(tput bold)"
+black="$(tput setaf 0)"
+red="$(tput setaf 1)"
+green="$(tput setaf 2)"
+yellow="$(tput setaf 3)"
+blue="$(tput setaf 4)"
+magenta="$(tput setaf 5)"
+cyan="$(tput setaf 6)"
+white="$(tput setaf 7)"
+reset="$(tput sgr0)"
 
 # you can change these
-lc="${rc}${bc}${c4}"	# labels
-nc="${rc}${bc}${c4}"	# user and hostname
-ic="${rc}${bc}${c7}"	# info
-pc="${rc}${c2}"			# primary color
-sc="${rc}${c3}"			# secondary color
-tc="${rc}${c1}"		# tertiary color
-qc="${rc}${c5}"		# quaternary color
-uc="${rc}${c6}"		# quinary color
-
+lc="${reset}${bold}${blue}"		# labels
+nc="${reset}${bold}${blue}"		# user and hostname
+ic="${reset}${bold}${white}"	# info
+c0="${reset}${green}"			# first color
+c1="${reset}${yellow}"			# second color
+c2="${reset}${red}"				# third color
+c3="${reset}${magenta}"			# fourth color
+c4="${reset}${cyan}"			# fifth color
 
 ## OUTPUT
 
 cat <<EOF
 
-${pc}        .:'    ${nc}${USER}${ic}@${nc}${host}${rc}
-${pc}     _ :'_     ${lc}OS:        ${ic}${os}${rc}
-${sc}  .'\`_\`-'_\`\`.  ${lc}KERNEL:    ${ic}${kernel}${rc}
-${tc} :________.-'  ${lc}UPTIME:    ${ic}${uptime}${rc}
-${tc} :_______:     ${lc}PACKAGES:  ${ic}${packages}${rc}
-${qc}  :_______\`-;  ${lc}SHELL:     ${ic}${shell}${rc}
-${uc}   \`._.-._.'   ${lc}WM:        ${ic}${WM}${rc}
+${c0}         .:'    ${nc}${USER}${ic}@${nc}${host}${reset}
+${c0}      _ :'_     ${lc}OS:        ${ic}${os}${reset}
+${c1}   .'\`_\`-'_\`\`.  ${lc}KERNEL:    ${ic}${kernel}${reset}
+${c2}  :________.-'  ${lc}UPTIME:    ${ic}${uptime}${reset}
+${c2}  :_______:     ${lc}PACKAGES:  ${ic}${packages}${reset}
+${c3}   :_______\`-;  ${lc}SHELL:     ${ic}${shell}${reset}
+${c4}    \`._.-._.'   ${lc}WM:        ${ic}${WM}${reset}
 
 EOF

@@ -1,7 +1,6 @@
 #!/bin/sh
 #
-# ufetch-gentoo - tiny system info for gentoo linux
-#
+# ufetch-gentoo - tiny system info for gentoo
 
 ## INFO
 
@@ -15,41 +14,40 @@ shell="$(basename ${SHELL})"
 if [ -z "${WM}" ]; then
 	WM="$(tail -n 1 "${HOME}/.xinitrc" | cut -d ' ' -f 2)"
 fi
-cpu="$(uname -p)"
 
 ## DEFINE COLORS
 
 # probably don't change these
-bc="$(tput bold)"		# bold
-c0="$(tput setaf 0)"	# black
-c1="$(tput setaf 1)"	# red
-c2="$(tput setaf 2)"	# green
-c3="$(tput setaf 3)"	# yellow
-c4="$(tput setaf 4)"	# blue
-c5="$(tput setaf 5)"	# magenta
-c6="$(tput setaf 6)"	# cyan
-c7="$(tput setaf 7)"	# white
-rc="$(tput sgr0)"		# reset
+bold="$(tput bold)"
+black="$(tput setaf 0)"
+red="$(tput setaf 1)"
+green="$(tput setaf 2)"
+yellow="$(tput setaf 3)"
+blue="$(tput setaf 4)"
+magenta="$(tput setaf 5)"
+cyan="$(tput setaf 6)"
+white="$(tput setaf 7)"
+reset="$(tput sgr0)"
 
 # you can change these
-lc="${rc}${bc}${c5}"	# labels
-nc="${rc}${bc}${c5}"	# user and hostname
-ic="${rc}${bc}${c7}"	# info
-fc="${rc}${bc}${c5}"	# first color
-sc="${rc}${c5}"			# second color
+lc="${reset}${bold}${magenta}"	# labels
+nc="${reset}${bold}${magenta}"	# user and hostname
+ic="${reset}${bold}${white}"	# info
+c0="${reset}${bold}${magenta}"	# first color
+c1="${reset}${magenta}"			# second color
 
 ## OUTPUT
 # art from gentoo prefix project's bootstrap-prefix.sh
 
 cat <<EOF
 
-${fc}     .vir.       ${nc}${USER}${ic}@${nc}${host}${rc}
-${fc}   .d\$\$\$\$${sc}\$\$b.    ${lc}OS:        ${ic}${os}${rc}
-${fc}   \$\$\$\$${sc}( )${pc}\$${sc}\$\$b   ${lc}KERNEL:    ${ic}${kernel}${rc}
-${fc}   Q\$\$\$\$\$\$\$\$${sc}\$\$B  ${lc}UPTIME:    ${ic}${uptime}${rc}
-${fc}     "\$\$\$\$\$${sc}\$\$P   ${lc}PACKAGES:  ${ic}${packages}${rc}
-${fc}    d\$\$\$\$${sc}\$\$P"    ${lc}SHELL:     ${ic}${shell}${rc}
-${fc}  \$\$\$\$\$${sc}\$\$P       ${lc}WM:        ${ic}${WM}${rc}
-${fc}  \`Q\$\$${sc}P"         ${lc}CPU:       ${ic}${cpu}${rc}
+${c0}     .vir.       ${nc}${USER}${ic}@${nc}${host}${reset}
+${c0}   .d\$\$\$\$${c1}\$\$b.    ${lc}OS:        ${ic}${os}${reset}
+${c0}   \$\$\$\$${c1}( )${c0}\$${c1}\$\$b   ${lc}KERNEL:    ${ic}${kernel}${reset}
+${c0}   Q\$\$\$\$\$\$\$\$${c1}\$\$B  ${lc}UPTIME:    ${ic}${uptime}${reset}
+${c0}     "\$\$\$\$\$${c1}\$\$P   ${lc}PACKAGES:  ${ic}${packages}${reset}
+${c0}    d\$\$\$\$${c1}\$\$P"    ${lc}SHELL:     ${ic}${shell}${reset}
+${c0}  \$\$\$\$\$${c1}\$\$P       ${lc}WM:        ${ic}${WM}${reset}
+${c0}  \`Q\$\$${c1}P"${reset}
 
 EOF

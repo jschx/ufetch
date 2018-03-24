@@ -1,12 +1,11 @@
 #!/bin/sh
 #
 # ufetch-crux - tiny system info for crux
-#
 
 ## INFO
 
 # user is already defined
-hostname="$(hostname)"
+host="$(hostname)"
 os="$(crux)"
 kernel="$(uname -sr)"
 uptime="$(uptime -p | sed 's/up //')"
@@ -19,33 +18,35 @@ fi
 ## DEFINE COLORS
 
 # probably don't change these
-bc="$(tput bold)"		# bold
-c0="$(tput setaf 0)"	# black
-c1="$(tput setaf 1)"	# red
-c2="$(tput setaf 2)"	# green
-c3="$(tput setaf 3)"	# yellow
-c4="$(tput setaf 4)"	# blue
-c5="$(tput setaf 5)"	# magenta
-c6="$(tput setaf 6)"	# cyan
-c7="$(tput setaf 7)"	# white
-rc="$(tput sgr0)"		# reset
+bold="$(tput bold)"
+black="$(tput setaf 0)"
+red="$(tput setaf 1)"
+green="$(tput setaf 2)"
+yellow="$(tput setaf 3)"
+blue="$(tput setaf 4)"
+magenta="$(tput setaf 5)"
+cyan="$(tput setaf 6)"
+white="$(tput setaf 7)"
+reset="$(tput sgr0)"
 
 # you can change these
-lc="${rc}${bc}${c6}"	# labels
-nc="${rc}${bc}${c6}"	# user and hostname
-ic="${rc}${bc}${c7}"	# info
-pc="${rc}${c6}"			# penguin
+lc="${reset}${bold}${cyan}"		# labels
+nc="${reset}${bold}${cyan}"		# user and hostname
+ic="${reset}${bold}${white}"	# info
+c0="${reset}${cyan}"			# first color
+c1="${reset}${white}"			# second color
+c2="${reset}${yellow}"			# third color
 
 ## OUTPUT
 
 cat <<EOF
 
-${pc}      ___     ${nc}${USER}${ic}@${nc}${hostname}${rc}
-${pc}     (${c7}.· ${pc}|    ${lc}OS:        ${ic}${os}${rc}
-${pc}     (${c3}<> ${pc}|    ${lc}KERNEL:    ${ic}${kernel}${rc}
-${pc}    / ${c7}__  ${pc}\\   ${lc}UPTIME:    ${ic}${uptime}${rc}
-${pc}   ( ${c7}/  \\ ${pc}/|  ${lc}PACKAGES:  ${ic}${packages}${rc}
-${c3}  _${pc}/\\ ${c7}__)${pc}/${c3}_${pc})  ${lc}SHELL:     ${ic}${shell}${rc}
-${c3}  \/${pc}-____${c3}\/   ${lc}WM:        ${ic}${WM}${rc}
+${c0}      ___     ${nc}${USER}${ic}@${nc}${host}${reset}
+${c0}     (${c1}.· ${c0}|    ${lc}OS:        ${ic}${os}${reset}
+${c0}     (${c2}<> ${c0}|    ${lc}KERNEL:    ${ic}${kernel}${reset}
+${c0}    / ${c1}__  ${c0}\\   ${lc}UPTIME:    ${ic}${uptime}${reset}
+${c0}   ( ${c1}/  \\ ${c0}/|  ${lc}PACKAGES:  ${ic}${packages}${reset}
+${c2}  _${c0}/\\ ${c1}__)${c0}/${c2}_${c0})  ${lc}SHELL:     ${ic}${shell}${reset}
+${c2}  \/${c0}-____${c2}\/   ${lc}WM:        ${ic}${WM}${reset}
 
 EOF

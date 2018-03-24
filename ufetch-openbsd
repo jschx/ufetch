@@ -1,7 +1,6 @@
 #!/bin/sh
 #
 # ufetch-openbsd - tiny system info for openbsd
-#
 
 ## INFO
 
@@ -19,36 +18,36 @@ fi
 ## DEFINE COLORS
 
 # probably don't change these
-bc="$(tput bold)"		# bold
-c0="$(tput setaf 0)"	# black
-c1="$(tput setaf 1)"	# red
-c2="$(tput setaf 2)"	# green
-c3="$(tput setaf 3)"	# yellow
-c4="$(tput setaf 4)"	# blue
-c5="$(tput setaf 5)"	# magenta
-c6="$(tput setaf 6)"	# cyan
-c7="$(tput setaf 7)"	# white
-rc="$(tput sgr0)"		# reset
+bold="$(tput bold)"
+black="$(tput setaf 0)"
+red="$(tput setaf 1)"
+green="$(tput setaf 2)"
+yellow="$(tput setaf 3)"
+blue="$(tput setaf 4)"
+magenta="$(tput setaf 5)"
+cyan="$(tput setaf 6)"
+white="$(tput setaf 7)"
+reset="$(tput sgr0)"
 
 # you can change these
-lc="${rc}${bc}${c3}"	# labels
-nc="${rc}${bc}${c3}"	# user and hostname
-ic="${rc}${bc}${c7}"	# info
-fc="${rc}${c3}"			# first color
-sc="${rc}${c7}"			# second color
-tc="${rc}${bc}${c3}"	# third color
+lc="${reset}${bold}${yellow}"	# labels
+nc="${reset}${bold}${yellow}"	# user and hostname
+ic="${reset}${bold}${white}"	# info
+c0="${reset}${yellow}"			# first color
+c1="${reset}${white}"			# second color
+c2="${reset}${bold}${yellow}"	# third color
 
 
 ## OUTPUT
 
 cat <<EOF
 
-${fc}       _____      ${nc}${USER}${ic}@${nc}${host}${rc}
-${fc}     \-     -/    ${lc}OS:        ${ic}${os}${rc}
-${fc}  \_/         \   ${lc}KERNEL:    ${ic}${kernel}${rc}
-${fc}  |        ${sc}O O${fc} |  ${lc}UPTIME:    ${ic}${uptime}${rc}
-${fc}  |_  ${tc}<   ${fc})  ${tc}3 ${fc})  ${lc}PACKAGES:  ${ic}${packages}${rc}
-${fc}  / \         /   ${lc}SHELL:     ${ic}${shell}${rc}
-${fc}     /-_____-\    ${lc}WM:        ${ic}${WM}${rc}
+${c0}       _____      ${nc}${USER}${ic}@${nc}${host}${rc}
+${c0}     \-     -/    ${lc}OS:        ${ic}${os}${rc}
+${c0}  \_/         \   ${lc}KERNEL:    ${ic}${kernel}${rc}
+${c0}  |        ${c1}O O ${c0}|  ${lc}UPTIME:    ${ic}${uptime}${rc}
+${c0}  |_  ${c2}<   ${c0})  ${c2}3 ${c0})  ${lc}PACKAGES:  ${ic}${packages}${rc}
+${c0}  / \         /   ${lc}SHELL:     ${ic}${shell}${rc}
+${c0}     /-_____-\    ${lc}WM:        ${ic}${WM}${rc}
 
 EOF
