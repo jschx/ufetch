@@ -33,19 +33,19 @@ reset="$(tput me)"
 lc="${reset}${bold}${red}"		# labels
 nc="${reset}${bold}${red}"		# user and hostname
 ic="${reset}${bold}${white}"	# info
-c0="${reset}${red}"				# first color
-c1="${reset}${bold}${red}"		# second color
+c0="${reset}${bold}${red}"		# first color
+c1="${reset}${red}"				# second color
 
 ## OUTPUT
 
 cat <<EOF
 
-${c0}   ${c1}/\\ ${c0}_____ ${c1}/\   ${nc}${USER}${ic}@${nc}${host}${reset}
-${c0}   ${c1}\_)     (_/   ${lc}OS:        ${ic}${os}${reset}
-${c0}   /         \   ${lc}KERNEL:    ${ic}${kernel}${reset}
-${c0}  |           |  ${lc}UPTIME:    ${ic}${uptime}${reset}
-${c0}  |           |  ${lc}PACKAGES:  ${ic}${packages}${reset}
-${c0}   \         /   ${lc}SHELL:     ${ic}${shell}${reset}
-${c0}    --_____--    ${lc}WM:        ${ic}${WM}${reset}
+${c0}   _  ${c1}_____  ${c0}_   ${nc}${USER}${ic}@${nc}${host}${reset}
+${c0}  / \\\`     \`/ \\  ${lc}OS:        ${ic}${os}${reset}
+${c0}  \/       (__/  ${lc}KERNEL:    ${ic}${kernel}${reset}
+${c1}  |           |  ${lc}UPTIME:    ${ic}${uptime}${reset}
+${c1}  |           |  ${lc}PACKAGES:  ${ic}${packages}${reset}
+${c1}   \         /   ${lc}SHELL:     ${ic}${shell}${reset}
+${c1}    \`-_____-\`    ${lc}WM:        ${ic}${WM}${reset}
 
 EOF
