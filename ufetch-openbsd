@@ -42,12 +42,12 @@ c2="${reset}${bold}${yellow}"	# third color
 
 cat <<EOF
 
-${c0}       _____      ${nc}${USER}${ic}@${nc}${host}${rc}
-${c0}     \-     -/    ${lc}OS:        ${ic}${os}${rc}
-${c0}  \_/         \   ${lc}KERNEL:    ${ic}${kernel}${rc}
-${c0}  |        ${c1}O O ${c0}|  ${lc}UPTIME:    ${ic}${uptime}${rc}
-${c0}  |_  ${c2}<   ${c0})  ${c2}3 ${c0})  ${lc}PACKAGES:  ${ic}${packages}${rc}
-${c0}  / \         /   ${lc}SHELL:     ${ic}${shell}${rc}
-${c0}     /-_____-\    ${lc}WM:        ${ic}${WM}${rc}
+${c0}       _____      ${nc}${USER}${ic}@${nc}${host}${reset}
+${c0}     \-     -/    ${lc}OS:        ${ic}${os}${reset}
+${c0}  \_/         \   ${lc}KERNEL:    ${ic}${kernel}${reset}
+${c0}  |        ${c1}O O ${c0}|  ${lc}UPTIME:    ${ic}${uptime}${reset}
+${c0}  |_  ${c2}<   ${c0})  ${c2}3 ${c0})  ${lc}PACKAGES:  ${ic}${packages}${reset}
+${c0}  / \         /   ${lc}SHELL:     ${ic}${shell}${reset}
+${c0}     /-_____-\    ${lc}WM:        ${ic}${WM}${reset}
 
 EOF
