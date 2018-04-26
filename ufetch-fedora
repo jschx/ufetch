@@ -11,8 +11,20 @@ kernel="$(uname -sr)"
 uptime="$(uptime -p | sed 's/up //')"
 packages="$(yum list installed | wc -l)"
 shell="$(basename ${SHELL})"
+
 if [ -z "${WM}" ]; then
-	WM="$(wmctrl -m | grep 'Name:' | sed 's/Name\: //')"
+	if [ "${XDG_CURRENT_DESKTOP}" ]; then
+		envtype='DE'
+		WM="${XDG_CURRENT_DESKTOP}"
+	elif [ "${DESKTOP_SESSION}" ]; then
+		envtype='DE'
+		WM="${DESKTOP_SESSION}"
+	else
+		envtype='WM'
+		WM="$(tail -n 1 "${HOME}/.xinitrc" | cut -d ' ' -f 2)"
+	fi
+else
+	envtype='WM'
 fi
 
 ## DEFINE COLORS
@@ -45,6 +57,6 @@ ${c0}    _|  |_     ${lc}KERNEL:    ${ic}${kernel}${reset}
 ${c0}   |_    _|    ${lc}UPTIME:    ${ic}${uptime}${reset}
 ${c0}     |  |      ${lc}PACKAGES:  ${ic}${packages}${reset}
 ${c0}   __/  |      ${lc}SHELL:     ${ic}${shell}${reset}
-${c0}  /____/       ${lc}WM:        ${ic}${WM}${reset}
+${c0}  /____/       ${lc}${envtype}:        ${ic}${WM}${reset}
 
 EOF

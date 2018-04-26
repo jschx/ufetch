@@ -11,8 +11,20 @@ kernel="$(uname -iK)"
 uptime="$(uptime | awk -F, '{sub(".*up ",x,$1);print $1}' | sed -e 's/^[ \t]*//')"
 packages="$(pkg info | wc -l | sed -e 's/^[ \t]*//')"
 shell="$(basename ${SHELL})"
+
 if [ -z "${WM}" ]; then
-	WM="$(tail -n 1 "${HOME}/.xinitrc" | cut -d ' ' -f 2)"
+	if [ "${XDG_CURRENT_DESKTOP}" ]; then
+		envtype='DE'
+		WM="${XDG_CURRENT_DESKTOP}"
+	elif [ "${DESKTOP_SESSION}" ]; then
+		envtype='DE'
+		WM="${DESKTOP_SESSION}"
+	else
+		envtype='WM'
+		WM="$(tail -n 1 "${HOME}/.xinitrc" | cut -d ' ' -f 2)"
+	fi
+else
+	envtype='WM'
 fi
 
 ## DEFINE COLORS
@@ -46,6 +58,6 @@ ${c0}  \/       (__/  ${lc}KERNEL:    ${ic}${kernel}${reset}
 ${c1}  |           |  ${lc}UPTIME:    ${ic}${uptime}${reset}
 ${c1}  |           |  ${lc}PACKAGES:  ${ic}${packages}${reset}
 ${c1}   \         /   ${lc}SHELL:     ${ic}${shell}${reset}
-${c1}    \`-_____-\`    ${lc}WM:        ${ic}${WM}${reset}
+${c1}    \`-_____-\`    ${lc}${envtype}:        ${ic}${WM}${reset}
 
 EOF
