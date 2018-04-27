@@ -52,12 +52,12 @@ c1="${reset}${bold}${blue}"		# second color
 
 sed 's/\\/\\\\/g' <<EOF
 
-${c0}    \\  ${c1}\\ //    ${nc}${USER}${ic}@${rc}${nc}${host}${reset}
-${c0}   ==\\__${c1}\\/ ${c0}//  ${lc}OS:        ${ic}${os}${reset}
-${c1}     //   \\${c0}//   ${lc}KERNEL:    ${ic}${kernel}${reset}
-${c1}  ==//     ${c0}//==  ${lc}UPTIME:    ${ic}${uptime}${reset}
-${c1}   //${c0}\\${c1}___${fc}//     ${lc}PACKAGES:  ${ic}${packages}${reset}
-${c1}  // ${c0}/\\  ${c1}\\==   ${lc}SHELL:     ${ic}${shell}${reset}
-${c0}    // \\  ${c1}\\    ${lc}${envtype}:        ${ic}${WM}${reset}
+${c0}    \\   ${c1}\\ //    ${nc}${USER}${ic}@${rc}${nc}${host}${reset}
+${c0}   ==\\___${c1}\\/ ${c0}//  ${lc}OS:        ${ic}${os}${reset}
+${c1}     //    \\${c0}//   ${lc}KERNEL:    ${ic}${kernel}${reset}
+${c1}  ==//      ${c0}//==  ${lc}UPTIME:    ${ic}${uptime}${reset}
+${c1}   //${c0}\\${c1}____${c0}//     ${lc}PACKAGES:  ${ic}${packages}${reset}
+${c1}  // ${c0}/\\   ${c1}\\==   ${lc}SHELL:     ${ic}${shell}${reset}
+${c0}    // \\   ${c1}\\    ${lc}${envtype}:        ${ic}${WM}${reset}
 
 EOF
