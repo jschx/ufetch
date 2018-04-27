@@ -52,12 +52,12 @@ c1="${reset}${green}"			# second color
 
 cat <<EOF
 
-${c0}      _______    ${nc}${USER}${ic}@${nc}${host}${reset}
-${c1}   _ ${c0}\______ \   ${lc}OS:        ${ic}${os}${reset}
-${c1}  | \  ${c0}___  \ |  ${lc}KERNEL:    ${ic}${kernel}${reset}
-${c1}  | | ${c0}/   \ | |  ${lc}UPTIME:    ${ic}${uptime}${reset}
-${c1}  | | ${c0}\___/ | |  ${lc}PACKAGES:  ${ic}${packages}${reset}
-${c1}  | \______ ${c0}\_|  ${lc}SHELL:     ${ic}${shell}${reset}
-${c1}   \_______\     ${lc}${envtype}:        ${ic}${WM}${reset}
+${c0}      _______      ${nc}${USER}${ic}@${nc}${host}${reset}
+${c1}      ${c0}\_____ \`-    ${lc}OS:        ${ic}${os}${reset}
+${c1}   /\   ${c0}___ \`- \   ${lc}KERNEL:    ${ic}${kernel}${reset}
+${c1}  | |  ${c0}/   \  | |  ${lc}UPTIME:    ${ic}${uptime}${reset}
+${c1}  | |  ${c0}\___/  | |  ${lc}PACKAGES:  ${ic}${packages}${reset}
+${c1}   \ \`-_____  ${c0}\/   ${lc}SHELL:     ${ic}${shell}${reset}
+${c1}    \`-______\      ${lc}${envtype}:        ${ic}${WM}${reset}
 
 EOF
