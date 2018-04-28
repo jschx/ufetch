@@ -49,17 +49,15 @@ c0="${reset}${bold}${magenta}"	# first color
 c1="${reset}${magenta}"			# second color
 
 ## OUTPUT
-# art from gentoo prefix project's bootstrap-prefix.sh
 
 cat <<EOF
 
-${c0}     .vir.       ${nc}${USER}${ic}@${nc}${host}${reset}
-${c0}   .d\$\$\$\$${c1}\$\$b.    ${lc}OS:        ${ic}${os}${reset}
-${c0}   \$\$\$\$${c1}( )${c0}\$${c1}\$\$b   ${lc}KERNEL:    ${ic}${kernel}${reset}
-${c0}   Q\$\$\$\$\$\$\$\$${c1}\$\$B  ${lc}UPTIME:    ${ic}${uptime}${reset}
-${c0}     "\$\$\$\$\$${c1}\$\$P   ${lc}PACKAGES:  ${ic}${packages}${reset}
-${c0}    d\$\$\$\$${c1}\$\$P"    ${lc}SHELL:     ${ic}${shell}${reset}
-${c0}  \$\$\$\$\$${c1}\$\$P       ${lc}${envtype}:        ${ic}${WM}${reset}
-${c0}  \`Q\$\$${c1}P"${reset}
+${c0}     .-----.      ${nc}${USER}${ic}@${nc}${host}${reset}
+${c0}   .\`    _  \`.    ${lc}OS:        ${ic}${os}${reset}
+${c0}   \`.   (${c1}_)   ${c0}\`.  ${lc}KERNEL:    ${ic}${kernel}${reset}
+${c0}     \`${c1}.        /  ${lc}UPTIME:    ${ic}${uptime}${reset}
+${c1}    .\`       .\`   ${lc}PACKAGES:  ${ic}${packages}${reset}
+${c1}   /       .\`     ${lc}SHELL:     ${ic}${shell}${reset}
+${c1}   \____.-\`       ${lc}${envtype}:        ${ic}${WM}${reset}
 
 EOF
